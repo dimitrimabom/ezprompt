@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -69,7 +69,6 @@ Please provide the refactored code with explanations of what you changed and why
 
 export default function TemplateDetail() {
   const params = useParams()
-  const id = Number(params.id)
   const [copied, setCopied] = useState(false)
   const [formValues, setFormValues] = useState<Record<string, string>>({})
   const [finalPrompt, setFinalPrompt] = useState("")

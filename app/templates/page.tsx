@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -100,9 +100,9 @@ export default function Templates() {
     )
   }
 
-  const deleteTemplate = (id: number) => {
-    setTemplates(templates.filter((template) => template.id !== id))
-  }
+  // const deleteTemplate = (id: number) => {
+  //   setTemplates(templates.filter((template) => template.id !== id))
+  // }
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl ">
