@@ -35,14 +35,14 @@ export default function NewTemplate() {
       newSampleValues[variable] = sampleValues[variable] || getSampleValue(variable)
     })
     setSampleValues(newSampleValues)
-  }, [variables])
+  }, [variables, sampleValues])
 
   // Generate preview when in preview mode
   useEffect(() => {
     if (previewMode) {
       generatePreview()
     }
-  }, [previewMode, promptTemplate, sampleValues])
+  }, [previewMode, promptTemplate])
 
   const getSampleValue = (variable: string): string => {
     // Return appropriate sample values based on common variable names

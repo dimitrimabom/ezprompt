@@ -111,16 +111,26 @@ export default function EditTemplate() {
     }
 
     setLoading(false)
-  }, [params.id, router, toast])
+  }, [params.id, router])
 
   // Update sample values when variables change
   useEffect(() => {
-    const newSampleValues: Record<string, string> = {}
-    variables.forEach((variable) => {
-      newSampleValues[variable] = sampleValues[variable] || getSampleValue(variable)
-    })
+  const newSampleValues: Record<string, string> = {}
+  let hasChanged = false
+  variables.forEach((variable) => {
+    if (!(variable in sampleValues)) {
+      hasChanged = true
+      newSampleValues[variable] = getSampleValue(variable)
+    } else {
+      newSampleValues[variable] = sampleValues[variable]
+    }
+  })
+
+  if (hasChanged) {
     setSampleValues(newSampleValues)
-  }, [variables])
+  }
+}, [variables])
+
 
   // Generate preview when in preview mode
   useEffect(() => {

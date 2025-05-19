@@ -67,12 +67,22 @@ Please provide the refactored code with explanations of what you changed and why
   },
 ]
 
+type Template = {
+  id: number;
+  title: string;
+  description: string;
+  variables: string[];
+  category: string;
+  icon?: React.ReactNode;  // icon est maintenant optionnelle
+  promptTemplate: string;
+};
+
 export default function TemplateDetail() {
   const params = useParams()
   const [copied, setCopied] = useState(false)
   const [formValues, setFormValues] = useState<Record<string, string>>({})
   const [finalPrompt, setFinalPrompt] = useState("")
-  const [template, setTemplate] = useState<any>(null)
+  const [template, setTemplate] = useState<Template | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => {
@@ -98,6 +108,8 @@ export default function TemplateDetail() {
   }
 
   const generatePrompt = useCallback(() => {
+    if (!template) return;
+    
     setIsGenerating(true)
 
     // Simulate a delay for the generation process
