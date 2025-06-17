@@ -35,14 +35,14 @@ export default function NewTemplate() {
       newSampleValues[variable] = sampleValues[variable] || getSampleValue(variable)
     })
     setSampleValues(newSampleValues)
-  }, [variables, sampleValues])
+  }, [variables])
 
   // Generate preview when in preview mode
   useEffect(() => {
     if (previewMode) {
       generatePreview()
     }
-  }, [previewMode, promptTemplate])
+  }, [previewMode, promptTemplate, sampleValues])
 
   const getSampleValue = (variable: string): string => {
     // Return appropriate sample values based on common variable names
@@ -146,7 +146,7 @@ export default function NewTemplate() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!title.trim()) {
@@ -159,17 +159,36 @@ export default function NewTemplate() {
       return
     }
 
-    // In a real app, this would save to localStorage or a state management library
-    toast.success("Template created", {
-      description: "Your prompt template has been saved successfully.",
-    })
+    try {
+      // Save template to localStorage
+      const templates = JSON.parse(localStorage.getItem("templates") || "[]")
+      const newTemplate = {
+        id: Date.now(),
+        title,
+        description,
+        category,
+        promptTemplate,
+        variables,
+        createdAt: new Date().toISOString()
+      }
+      templates.push(newTemplate)
+      localStorage.setItem("templates", JSON.stringify(templates))
 
-    // Redirect to templates page
-    router.push("/templates")
+      toast.success("Template created", {
+        description: "Your prompt template has been saved successfully.",
+      })
+
+      // Redirect to templates page
+      router.push("/templates")
+    } catch (error) {
+      toast.error("Error saving template", {
+        description: "There was a problem saving your template. Please try again.",
+      })
+    }
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl ">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="flex items-center gap-4 mb-8">
         <Link href="/templates" className="text-muted-foreground hover:text-foreground">
           <ArrowLeft className="h-5 w-5" />
@@ -193,6 +212,7 @@ export default function NewTemplate() {
                     placeholder="E.g., Debug JavaScript Code"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    required
                   />
                 </div>
                 <div className="space-y-2">

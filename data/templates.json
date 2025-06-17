@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "title": "Debug Code",
+    "description": "Analyze and fix bugs in your code",
+    "variables": ["code", "error", "context"],
+    "category": "Debugging",
+    "icon": "bug",
+    "favorite": false
+  },
+  {
+    "id": "2",
+    "title": "Explain Code",
+    "description": "Get a detailed explanation of code functionality",
+    "variables": ["code", "language"],
+    "category": "Learning",
+    "icon": "code",
+    "favorite": false
+  },
+  {
+    "id": "3",
+    "title": "Refactor React Component",
+    "description": "Improve and optimize React components",
+    "variables": ["component", "objective"],
+    "category": "Refactoring",
+    "icon": "wrench",
+    "favorite": false
+  }
+]

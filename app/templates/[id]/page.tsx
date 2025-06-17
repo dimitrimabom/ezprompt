@@ -73,7 +73,7 @@ type Template = {
   description: string;
   variables: string[];
   category: string;
-  icon?: React.ReactNode;  // icon est maintenant optionnelle
+  icon?: React.ReactNode;
   promptTemplate: string;
 };
 
@@ -86,12 +86,9 @@ export default function TemplateDetail() {
   const [isGenerating, setIsGenerating] = useState(false)
 
   useEffect(() => {
-    // Find the template by ID from our mock data
     const foundTemplate = mockTemplates.find((t) => t.id === Number(params.id))
     if (foundTemplate) {
       setTemplate(foundTemplate)
-
-      // Initialize form values
       const initialValues: Record<string, string> = {}
       foundTemplate.variables.forEach((variable: string) => {
         initialValues[variable] = ""

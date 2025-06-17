@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
+import { ToggleThemeBtn } from "./toggleThemeBtn"
+import Image from "next/image.js";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -18,34 +20,57 @@ export default function Header() {
     <header className="flex items-center justify-center sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between max-w-7xl">
         <div className="flex items-center gap-2">
-          <Link href="/dashboard" className="flex items-center space-x-2">
-            <span className="font-bold text-xl">EzPrompt</span>
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
+              <Image
+                src="/logo.png"
+                alt="EzPrompt"
+                width={200}
+                height={200}
+                className="h-auto w-6 text-primary"
+              />
+              <span className="text-xl font-bold">Ezprompt</span>
+            </div>
           </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            href="/dashboard"
+            href="/"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
+              pathname === "/"
+                ? "text-primary"
+                : "text-muted-foreground"
             }`}
           >
-            Dashboard
+            Home
           </Link>
           <Link
             href="/templates"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/templates" || pathname.startsWith("/templates/") ? "text-primary" : "text-muted-foreground"
+              pathname === "/templates" || pathname.startsWith("/templates/")
+                ? "text-primary"
+                : "text-muted-foreground"
             }`}
           >
             Templates
           </Link>
+          <ToggleThemeBtn />
         </nav>
 
         {/* Mobile Menu Button */}
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
-          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={toggleMenu}
+        >
+          {isMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
         </Button>
       </div>
 
@@ -56,7 +81,9 @@ export default function Header() {
             <Link
               href="/dashboard"
               className={`block text-sm font-medium transition-colors hover:text-primary ${
-                pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
+                pathname === "/dashboard"
+                  ? "text-primary"
+                  : "text-muted-foreground"
               }`}
               onClick={toggleMenu}
             >
@@ -77,5 +104,5 @@ export default function Header() {
         </div>
       )}
     </header>
-  )
+  );
 }
