@@ -4,9 +4,11 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ToggleThemeBtn } from "./toggleThemeBtn"
 import Image from "next/image.js";
+
+const tabs = ["Features", "Use Cases", "How it works", "Testimonials", "FAQ"];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -16,8 +18,52 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hoverStyle, setHoverStyle] = useState({});
+  const [activeStyle, setActiveStyle] = useState({ left: "0px", width: "0px" });
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const tabRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      const hoveredElement = tabRefs.current[hoveredIndex];
+      if (hoveredElement) {
+        const { offsetLeft, offsetWidth } = hoveredElement;
+        setHoverStyle({
+          left: `${offsetLeft}px`,
+          width: `${offsetWidth}px`,
+        });
+      }
+    }
+  }, [hoveredIndex]);
+
+  useEffect(() => {
+    const activeElement = tabRefs.current[activeIndex];
+    if (activeElement) {
+      const { offsetLeft, offsetWidth } = activeElement;
+      setActiveStyle({
+        left: `${offsetLeft}px`,
+        width: `${offsetWidth}px`,
+      });
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      const overviewElement = tabRefs.current[0];
+      if (overviewElement) {
+        const { offsetLeft, offsetWidth } = overviewElement;
+        setActiveStyle({
+          left: `${offsetLeft}px`,
+          width: `${offsetWidth}px`,
+        });
+      }
+    });
+  }, []);
+
   return (
-    <header className="flex items-center justify-center sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between max-w-7xl">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
@@ -36,15 +82,31 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
+          {tabs.map((tab, index) => (
+            <Link
+              key={tab}
+              href={`#${tab.toLowerCase().replace(/\s+/g, "-")}`}
+              className={`text-sm font-medium transition-colors hover:text-foreground ${
+                index === activeIndex
+                  ? "text-foreground"
+                  : "text-muted-foreground"
+              }`}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+              onClick={() => setActiveIndex(index)}
+            >
+              {tab}
+            </Link>
+          ))}
           <Link
-            href="/"
+            href="/dashboard"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/"
+              pathname === "/dashboard"
                 ? "text-primary"
                 : "text-muted-foreground"
             }`}
           >
-            Home
+            Dashboard
           </Link>
           <Link
             href="/templates"
@@ -78,6 +140,20 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden border-t">
           <div className="container py-4 space-y-4">
+            {tabs.map((tab, index) => (
+              <Link
+                key={tab}
+                href={`#${tab.toLowerCase().replace(/\s+/g, "-")}`}
+                className={`block text-sm font-medium transition-colors hover:text-foreground ${
+                  index === activeIndex
+                    ? "text-foreground"
+                    : "text-muted-foreground"
+                }`}
+                onClick={toggleMenu}
+              >
+                {tab}
+              </Link>
+            ))}
             <Link
               href="/dashboard"
               className={`block text-sm font-medium transition-colors hover:text-primary ${

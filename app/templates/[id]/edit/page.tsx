@@ -84,6 +84,30 @@ export default function EditTemplate() {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
+  const getSampleValue = useCallback((variable: string): string => {
+    // Return appropriate sample values based on common variable names
+    switch (variable.toLowerCase()) {
+      case "code":
+        return "function add(a, b) {\n  return a + b;\n}"
+      case "error":
+        return 'TypeError: Cannot read property "length" of undefined'
+      case "context":
+        return "This function is used in a React component to calculate totals"
+      case "component":
+        return "function UserProfile({ user }) {\n  return <div>{user.name}</div>;\n}"
+      case "objective":
+        return "Improve performance and add error handling"
+      case "language":
+        return "JavaScript"
+      case "query":
+        return "SELECT * FROM users WHERE created_at > NOW() - INTERVAL 1 DAY"
+      case "database_type":
+        return "PostgreSQL"
+      default:
+        return `Sample ${variable} value`
+    }
+  }, [])
+
   // Load template data
   useEffect(() => {
     const templateId = Number.parseInt(params.id)
@@ -113,12 +137,25 @@ export default function EditTemplate() {
     setLoading(false)
   }, [params.id, router])
 
+  const generatePreview = useCallback(() => {
+    let result = promptTemplate
+
+    // Replace all variables in the template
+    Object.entries(sampleValues).forEach(([variable, value]) => {
+      const regex = new RegExp(`{{${variable}}}`, "g")
+      result = result.replace(regex, value)
+    })
+
+    setPreviewPrompt(result)
+  }, [promptTemplate, sampleValues])
+
   // Update sample values when variables change
   useEffect(() => {
     const newSampleValues: Record<string, string> = {}
     let hasChanged = false
+
     variables.forEach((variable) => {
-      if (!(variable in sampleValues)) {
+      if (!sampleValues[variable]) {
         hasChanged = true
         newSampleValues[variable] = getSampleValue(variable)
       } else {
@@ -129,38 +166,14 @@ export default function EditTemplate() {
     if (hasChanged) {
       setSampleValues(newSampleValues)
     }
-  }, [variables])
+  }, [variables, sampleValues, getSampleValue])
 
   // Generate preview when in preview mode
   useEffect(() => {
     if (previewMode) {
       generatePreview()
     }
-  }, [previewMode, promptTemplate, sampleValues])
-
-  const getSampleValue = (variable: string): string => {
-    // Return appropriate sample values based on common variable names
-    switch (variable.toLowerCase()) {
-      case "code":
-        return "function add(a, b) {\n  return a + b;\n}"
-      case "error":
-        return 'TypeError: Cannot read property "length" of undefined'
-      case "context":
-        return "This function is used in a React component to calculate totals"
-      case "component":
-        return "function UserProfile({ user }) {\n  return <div>{user.name}</div>;\n}"
-      case "objective":
-        return "Improve performance and add error handling"
-      case "language":
-        return "JavaScript"
-      case "query":
-        return "SELECT * FROM users WHERE created_at > NOW() - INTERVAL 1 DAY"
-      case "database_type":
-        return "PostgreSQL"
-      default:
-        return `Sample ${variable} value`
-    }
-  }
+  }, [previewMode, promptTemplate, sampleValues, generatePreview])
 
   const addVariable = () => {
     if (!newVariable.trim()) {
@@ -188,18 +201,6 @@ export default function EditTemplate() {
       [variable]: value,
     })
   }
-
-  const generatePreview = useCallback(() => {
-    let result = promptTemplate
-
-    // Replace all variables in the template
-    Object.entries(sampleValues).forEach(([variable, value]) => {
-      const regex = new RegExp(`{{${variable}}}`, "g")
-      result = result.replace(regex, value)
-    })
-
-    setPreviewPrompt(result)
-  }, [promptTemplate, sampleValues])
 
   const insertVariableIntoTemplate = (variable: string) => {
     const textArea = document.getElementById("promptTemplate") as HTMLTextAreaElement

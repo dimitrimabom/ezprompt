@@ -13,7 +13,6 @@ export default function Templates() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState<"name" | "category" | "favorites">("name")
 
   const categories = useMemo(() => {
@@ -22,7 +21,7 @@ export default function Templates() {
   }, [templates])
 
   const filteredTemplates = useMemo(() => {
-    let filtered = templates.filter((template) => {
+    const filtered = templates.filter((template) => {
       const matchesSearch =
         searchQuery === "" ||
         template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||

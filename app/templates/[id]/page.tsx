@@ -122,7 +122,7 @@ export default function TemplateDetail() {
       setFinalPrompt(result)
       setIsGenerating(false)
     }, 500)
-  }, [template?.promptTemplate, formValues])
+  }, [template, formValues])
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(finalPrompt)

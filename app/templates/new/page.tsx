@@ -28,23 +28,7 @@ export default function NewTemplate() {
   const [previewPrompt, setPreviewPrompt] = useState("")
   const router = useRouter()
 
-  // Update sample values when variables change
-  useEffect(() => {
-    const newSampleValues: Record<string, string> = {}
-    variables.forEach((variable) => {
-      newSampleValues[variable] = sampleValues[variable] || getSampleValue(variable)
-    })
-    setSampleValues(newSampleValues)
-  }, [variables])
-
-  // Generate preview when in preview mode
-  useEffect(() => {
-    if (previewMode) {
-      generatePreview()
-    }
-  }, [previewMode, promptTemplate, sampleValues])
-
-  const getSampleValue = (variable: string): string => {
+  const getSampleValue = useCallback((variable: string): string => {
     // Return appropriate sample values based on common variable names
     switch (variable.toLowerCase()) {
       case "code":
@@ -66,7 +50,35 @@ export default function NewTemplate() {
       default:
         return `Sample ${variable} value`
     }
-  }
+  }, [])
+
+  const generatePreview = useCallback(() => {
+    let result = promptTemplate
+
+    // Replace all variables in the template
+    Object.entries(sampleValues).forEach(([variable, value]) => {
+      const regex = new RegExp(`{{${variable}}}`, "g")
+      result = result.replace(regex, value)
+    })
+
+    setPreviewPrompt(result)
+  }, [promptTemplate, sampleValues])
+
+  // Update sample values when variables change
+  useEffect(() => {
+    const newSampleValues: Record<string, string> = {}
+    variables.forEach((variable) => {
+      newSampleValues[variable] = sampleValues[variable] || getSampleValue(variable)
+    })
+    setSampleValues(newSampleValues)
+  }, [variables, sampleValues, getSampleValue])
+
+  // Generate preview when in preview mode
+  useEffect(() => {
+    if (previewMode) {
+      generatePreview()
+    }
+  }, [previewMode, promptTemplate, sampleValues, generatePreview])
 
   const addVariable = () => {
     if (!newVariable.trim()) {
@@ -94,18 +106,6 @@ export default function NewTemplate() {
       [variable]: value,
     })
   }
-
-  const generatePreview = useCallback(() => {
-    let result = promptTemplate
-
-    // Replace all variables in the template
-    Object.entries(sampleValues).forEach(([variable, value]) => {
-      const regex = new RegExp(`{{${variable}}}`, "g")
-      result = result.replace(regex, value)
-    })
-
-    setPreviewPrompt(result)
-  }, [promptTemplate, sampleValues])
 
   const insertVariableIntoTemplate = (variable: string) => {
     const textArea = document.getElementById("promptTemplate") as HTMLTextAreaElement
@@ -180,7 +180,7 @@ export default function NewTemplate() {
 
       // Redirect to templates page
       router.push("/templates")
-    } catch (error) {
+    } catch {
       toast.error("Error saving template", {
         description: "There was a problem saving your template. Please try again.",
       })
