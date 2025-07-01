@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { LogIn, Menu, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { ToggleThemeBtn } from "./toggleThemeBtn"
 import Image from "next/image.js";
@@ -63,7 +63,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="flex items-center justify-center sticky top-0 z-50 px-6 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between max-w-7xl">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
@@ -98,7 +98,7 @@ export default function Header() {
               {tab}
             </Link>
           ))}
-          <Link
+          {/* <Link
             href="/dashboard"
             className={`text-sm font-medium transition-colors hover:text-primary ${
               pathname === "/dashboard"
@@ -117,8 +117,13 @@ export default function Header() {
             }`}
           >
             Templates
-          </Link>
+          </Link> */}
           <ToggleThemeBtn />
+          <Link href="/login">
+            <Button variant="outline" className="hidden md:flex items-center gap-2">
+              <LogIn className="h-4 w-4" />
+            </Button>
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -138,44 +143,34 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden border-t">
-          <div className="container py-4 space-y-4">
+        <div
+          className="fixed inset-0 z-40 border-b md:hidden animate-in slide-in-from-top-5"
+          onClick={toggleMenu}
+        >
+          <div
+            className="container flex flex-col gap-4 py-6 bg-background max-w-full p-6 absolute top-[65px] left-1/2 transform -translate-x-1/2 shadow-lg"
+            onClick={e => e.stopPropagation()}
+          >
             {tabs.map((tab, index) => (
               <Link
-                key={tab}
-                href={`#${tab.toLowerCase().replace(/\s+/g, "-")}`}
-                className={`block text-sm font-medium transition-colors hover:text-foreground ${
-                  index === activeIndex
-                    ? "text-foreground"
-                    : "text-muted-foreground"
-                }`}
-                onClick={toggleMenu}
+          key={tab}
+          href={`#${tab.toLowerCase().replace(/\s+/g, "-")}`}
+          className={`block rounded px-2 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-foreground ${
+            index === activeIndex
+              ? "text-foreground font-semibold"
+              : "text-muted-foreground"
+          }`}
+          onClick={() => {
+            setActiveIndex(index);
+            toggleMenu();
+          }}
               >
-                {tab}
+          {tab}
               </Link>
             ))}
-            <Link
-              href="/dashboard"
-              className={`block text-sm font-medium transition-colors hover:text-primary ${
-                pathname === "/dashboard"
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
-              onClick={toggleMenu}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/templates"
-              className={`block text-sm font-medium transition-colors hover:text-primary ${
-                pathname === "/templates" || pathname.startsWith("/templates/")
-                  ? "text-primary"
-                  : "text-muted-foreground"
-              }`}
-              onClick={toggleMenu}
-            >
-              Templates
-            </Link>
+            <div className="mt-2 flex justify-end">
+              <ToggleThemeBtn />
+            </div>
           </div>
         </div>
       )}

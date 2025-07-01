@@ -84,7 +84,7 @@ export default function Home() {
         {/* Hero Section with Email Collection */}
         <section
           id="hero"
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          className="relative min-h-96 py-30 flex items-center justify-center overflow-hidden px-6 md:px-12 lg:px-16"
         >
           <CssGridBackground />
           <FramerSpotlight />
@@ -101,98 +101,35 @@ export default function Home() {
               workflow.
             </p>
 
-            <div className="mt-10 flex flex-col items-center">
-              <form className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="h-12 bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                  required
-                />
-                <Button
-                  type="submit"
-                  className="h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
-                >
-                  Join waitlist
-                </Button>
-              </form>
-              <p className="mt-3 text-sm text-muted-foreground">
-                Be the first to know when we launch. No spam, ever.
-              </p>
+            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Button
+                variant="default"
+                size="lg"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold shadow-md transition cursor-pointer"
+                onClick={() => {
+                  window.location.href = "/api/auth/signup";
+                }}
+              >
+                Get started for free
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full sm:w-auto px-8 py-4 text-lg font-semibold transition cursor-pointer"
+                onClick={() => {
+                  window.location.href = "/api/auth/signin";
+                }}
+              >
+                Se connecter
+              </Button>
             </div>
           </div>
-
-          {/* Example Card */}
-          {/* <div className="mt-16 mx-auto max-w-4xl rounded-lg border border-border bg-card p-6 backdrop-blur-sm">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-medium text-card-foreground flex items-center gap-2">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    Debug React Component
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="rounded-md bg-secondary p-4 text-sm">
-                  <p>
-                    Help me debug this React component. I'm getting the
-                    following error:
-                  </p>
-                  <p className="mt-2 text-primary">{"{{error}}"}</p>
-                  <p className="mt-2">Here's my component code:</p>
-                  <p className="mt-2 text-primary">{"{{code}}"}</p>
-                  <p className="mt-2">What I'm trying to achieve:</p>
-                  <p className="mt-2 text-primary">{"{{objective}}"}</p>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-card-foreground">
-                  Fill in the variables:
-                </h4>
-                <div className="space-y-2">
-                  <div className="rounded-md border border-border bg-secondary p-3">
-                    <div className="text-xs text-muted-foreground">error</div>
-                    <div className="text-sm">
-                      TypeError: Cannot read property 'map' of undefined
-                    </div>
-                  </div>
-                  <div className="rounded-md border border-border bg-secondary p-3">
-                    <div className="text-xs text-muted-foreground">code</div>
-                    <div className="text-sm">
-                      {
-                        "function UserList() { const users = fetchUsers(); return ( <div>{users.map(user => <div key={user.id}>{user.name}</div>)}</div> ); }"
-                      }
-                    </div>
-                  </div>
-                  <div className="rounded-md border border-border bg-secondary p-3">
-                    <div className="text-xs text-muted-foreground">
-                      objective
-                    </div>
-                    <div className="text-sm">
-                      Display a list of users from an API
-                    </div>
-                  </div>
-                </div>
-                <Button className="w-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground">
-                  Generate Prompt
-                </Button>
-              </div>
-            </div>
-          </div> */}
         </section>
 
         {/* Features Section */}
         <section
           id="features"
-          className="py-16 md:py-24 border-t border-border"
+          className="py-16 md:py-24 border-t border-border px-6 md:px-12 lg:px-16 flex flex-col items-center"
         >
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
@@ -271,7 +208,7 @@ export default function Home() {
         {/* Use Cases Section */}
         <section
           id="use-cases"
-          className="py-16 md:py-24 border-t border-border bg-secondary/30"
+          className="py-16 md:py-24 border-t border-border bg-secondary/30 px-6 md:px-12 lg:px-16 flex flex-col items-center"
         >
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
@@ -471,7 +408,7 @@ export default function Home() {
         {/* How It Works */}
         <section
           id="how-it-works"
-          className="py-16 md:py-24 border-t border-border"
+          className="py-16 md:py-24 border-t border-border px-6 md:px-12 lg:px-16 flex flex-col items-center"
         >
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
@@ -520,7 +457,7 @@ export default function Home() {
         {/* Testimonials Section */}
         <section
           id="testimonials"
-          className="py-16 md:py-24 border-t border-border bg-secondary/30"
+          className="py-16 md:py-24 border-t border-border bg-secondary/30 px-6 md:px-12 lg:px-16 flex flex-col items-center"
         >
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
@@ -592,40 +529,36 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Waitlist Section */}
+        {/* Call to Action Section */}
         <section
-          id="waitlist"
-          className="py-16 md:py-24 border-t border-border"
+          id="cta"
+          className="py-20 md:py-32 border-t border-border px-6 md:px-12 lg:px-16 flex flex-col items-center bg-gradient-to-r from-primary/10 via-secondary/30 to-chart-4/10"
         >
           <div className="container">
-            <div className="mx-auto max-w-3xl rounded-lg border border-border bg-gradient-to-br from-primary/10 to-chart-4/10 p-8 text-center backdrop-blur-sm md:p-12">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-                Ready to streamline your AI workflow?
-              </h2>
-              <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-                Join developers who are saving time and improving their AI
-                interactions with Ezprompt.
-              </p>
+            <div className="mx-auto max-w-2xl text-center">
 
-              <form className="mt-8 flex flex-col items-center">
-                <div className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="h-12 bg-input border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:ring-primary"
-                    required
-                  />
-                  <Button
-                    type="submit"
-                    className="h-12 bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
-                    Join waitlist
-                  </Button>
-                </div>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Be the first to know when we launch. No spam, ever.
-                </p>
-              </form>
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+                Boost your productivity with Ezprompt
+              </h2>
+              <p className="mt-6 text-xl text-muted-foreground">
+                Stop wasting time rewriting prompts. Join hundreds of developers who are already saving hours every week.
+              </p>
+              <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                <Button
+                  variant="default"
+                  size="lg"
+                  className="w-full sm:w-auto px-10 py-5 text-lg font-bold shadow-xl transition"
+                  onClick={() => {
+                    window.location.href = "/api/auth/signup";
+                  }}
+                >
+                  Get started for free
+                </Button>
+
+              </div>
+              <p className="mt-6 text-sm text-muted-foreground">
+                No credit card required. Be among the first to try Ezprompt!
+              </p>
             </div>
           </div>
         </section>
@@ -633,7 +566,7 @@ export default function Home() {
         {/* FAQ Section */}
         <section
           id="faq"
-          className="py-16 md:py-24 border-t border-border bg-secondary/30"
+          className="py-16 md:py-24 border-t border-border bg-secondary/30 px-6 md:px-12 lg:px-16 flex flex-col items-center"
         >
           <div className="container">
             <div className="mx-auto max-w-3xl text-center">
@@ -704,101 +637,9 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Team Section */}
-        {/* <section className="py-16 md:py-24 border-t border-border bg-secondary/30">
-          <div className="container">
-            <div className="mx-auto max-w-3xl text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-                Meet the team
-              </h2>
-              <p className="mt-4 text-muted-foreground md:text-xl/relaxed">
-                The people behind Ezprompt
-              </p>
-            </div>
-
-            <div className="mx-auto mt-16 grid max-w-5xl gap-8 md:grid-cols-3">
-              <div className="rounded-lg border border-border bg-card p-6 text-center">
-                <div className="mx-auto h-24 w-24 rounded-full bg-primary/20 flex items-center justify-center mb-4">
-                  <span className="text-2xl font-bold">A</span>
-                </div>
-                <h3 className="text-xl font-bold">Alex Dubois</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Founder & Developer
-                </p>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Full-stack developer with a passion for developer tools and
-                  productivity.
-                </p>
-                <div className="flex justify-center gap-4">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Github className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Twitter className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Linkedin className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-border bg-card p-6 text-center">
-                <div className="mx-auto h-24 w-24 rounded-full bg-chart-4/20 flex items-center justify-center mb-4">
-                  <span className="text-2xl font-bold">S</span>
-                </div>
-                <h3 className="text-xl font-bold">Sophie Martin</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Co-founder & Designer
-                </p>
-                <p className="text-muted-foreground text-sm mb-4">
-                  UX/UI designer focused on creating intuitive and beautiful
-                  interfaces.
-                </p>
-                <div className="flex justify-center gap-4">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Github className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Twitter className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Linkedin className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-border bg-card p-6 text-center">
-                <div className="mx-auto h-24 w-24 rounded-full bg-chart-1/20 flex items-center justify-center mb-4">
-                  <span className="text-2xl font-bold">T</span>
-                </div>
-                <h3 className="text-xl font-bold">Thomas Lee</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Co-founder & Product
-                </p>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Product strategist with experience in AI and developer tools.
-                </p>
-                <div className="flex justify-center gap-4">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Github className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Twitter className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <Linkedin className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
-
-        {/* CTA Section with Email Collection */}
       </main>
 
-      <footer className="border-t border-border py-12">
+      <footer className="border-t border-border py-12 px-6 md:px-12 lg:px-16 flex flex-col items-center">
         <div className="container">
           <div className="flex justify-center items-center max-w-7xl mx-auto">
             <div className="space-y-4 flex justify-center items-center flex-col">
@@ -827,120 +668,6 @@ export default function Home() {
                 </Button>
               </div>
             </div>
-
-            {/* <div className="">
-              <h3 className="font-bold mb-4">Product</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="#features"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#use-cases"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Use Cases
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#how-it-works"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    How it works
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Pricing
-                  </Link>
-                </li>
-              </ul>
-            </div> */}
-
-            {/* <div>
-              <h3 className="font-bold mb-4">Company</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Contact
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-bold mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Terms
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Cookies
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    Licenses
-                  </Link>
-                </li>
-              </ul>
-            </div> */}
           </div>
 
           <div className="mt-12 border-t border-border pt-8 text-center">
